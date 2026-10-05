@@ -9,7 +9,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Demonstrates Java Collections using Student objects.
+ * Demonstrates common Java collection types using Student objects.
+ * This program shows how to store, sort, filter, and compare student records.
  *
  * @author Aayusha Adhikari
  * @version 1.0
@@ -17,17 +18,18 @@ import java.util.TreeSet;
 public class StudentCollectionDemo {
 
     /**
-     * Runs the Student Collection Management System.
+     * Runs the program and demonstrates Java collection operations.
      *
      * @param args command-line arguments
      */
     public static void main(String[] args) {
-
         System.out.println(
                 "========== STUDENT COLLECTION MANAGEMENT SYSTEM ==========");
 
-        // Create an ArrayList of students
-        List<Student> students = new ArrayList<Student>();
+        /**
+         * Section 1: Create an ArrayList and populate it with sample student records.
+         */
+        List<Student> students = new ArrayList<>();
 
         students.add(new Student(101, "Maya", "Computer Science", 3.8));
         students.add(new Student(102, "Daniel", "Biology", 2.3));
@@ -37,11 +39,15 @@ public class StudentCollectionDemo {
         students.add(new Student(106, "Noah", "Engineering", 3.2));
 
         System.out.println("\n1. Original Student List");
-
         for (Student student : students) {
             System.out.println(student);
         }
-System.out.println("\n2. ArrayList Operations");
+
+        /**
+         * Section 2: Demonstrate basic ArrayList operations such as add, get, set,
+         * contains, size, isEmpty, and remove.
+         */
+        System.out.println("\n2. ArrayList Operations");
 
         Student newStudent = new Student(107, "Liam", "Chemistry", 3.4);
         students.add(newStudent);
@@ -56,182 +62,166 @@ System.out.println("\n2. ArrayList Operations");
         System.out.println("Replaced student at index 1 with: "
                 + replacementStudent);
 
-        System.out.println("Contains Liam: "
-                + students.contains(newStudent));
-
-        System.out.println("Number of students: "
-                + students.size());
-
-        System.out.println("Is the list empty? "
-                + students.isEmpty());
+        System.out.println("Contains Liam: " + students.contains(newStudent));
+        System.out.println("Number of students: " + students.size());
+        System.out.println("Is the list empty? " + students.isEmpty());
 
         Student removedStudent = students.remove(2);
         System.out.println("Removed: " + removedStudent);
+        System.out.println("Number of students after removal: " + students.size());
 
-        System.out.println("Number of students after removal: "
-                + students.size());
+        /**
+         * Section 3: Iterate through the list using an enhanced for loop.
+         */
+        System.out.println("\n3. For-Each Traversal");
+        for (Student student : students) {
+            System.out.println(student);
+        }
 
+        /**
+         * Section 4: Traverse the list using an Iterator object.
+         */
+        System.out.println("\n4. Iterator Traversal");
+        Iterator<Student> iterator = students.iterator();
 
-// 3. For-Each Traversal
-System.out.println("\n3. For-Each Traversal");
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
 
-for (Student student : students) {
-    System.out.println(student);
-}
+        /**
+         * Section 5: Use the lambda-style forEach method to print each student.
+         */
+        System.out.println("\n5. Lambda / forEach Traversal");
+        students.forEach(s -> System.out.println(s));
 
-// 4. Iterator Traversal
-System.out.println("\n4. Iterator Traversal");
+        /**
+         * Section 6: Sort students by name using the natural ordering defined by
+         * the compareTo method in the Student class.
+         */
+        System.out.println("\n6. Students Sorted by Name");
+        Collections.sort(students);
 
-Iterator<Student> iterator = students.iterator();
+        for (Student student : students) {
+            System.out.println(student);
+        }
 
-while (iterator.hasNext()) {
-    System.out.println(iterator.next());
-}
+        /**
+         * Section 7: Sort students by GPA using a Comparator.
+         */
+        System.out.println("\n7. Students Sorted by GPA");
+        Comparator<Student> byGPA =
+                (s1, s2) -> Double.compare(s1.getGpa(), s2.getGpa());
 
-// 5. Lambda / forEach Traversal
-System.out.println("\n5. Lambda / forEach Traversal");
+        Collections.sort(students, byGPA);
 
-students.forEach(s -> System.out.println(s));
-  // 6. Students Sorted by Name
-System.out.println("\n6. Students Sorted by Name");
+        for (Student student : students) {
+            System.out.println(student);
+        }
 
-Collections.sort(students);
+        /**
+         * Section 8: Sort students by ID using another Comparator.
+         */
+        System.out.println("\n8. Students Sorted by ID");
+        Comparator<Student> byID =
+                (s1, s2) -> Integer.compare(s1.getId(), s2.getId());
 
-for (Student student : students) {
-    System.out.println(student);
-}
+        Collections.sort(students, byID);
 
+        for (Student student : students) {
+            System.out.println(student);
+        }
 
-// 7. Students Sorted by GPA
-System.out.println("\n7. Students Sorted by GPA");
+        /**
+         * Section 9: Filter the list by removing students whose GPA is below 2.5.
+         */
+        System.out.println("\n9. Filtering Students Using Iterator");
+        System.out.println("Before filtering:");
+        for (Student student : students) {
+            System.out.println(student);
+        }
 
-Comparator<Student> byGPA =
-        (s1, s2) -> Double.compare(s1.getGpa(), s2.getGpa());
+        Iterator<Student> filterIterator = students.iterator();
+        while (filterIterator.hasNext()) {
+            Student student = filterIterator.next();
 
-Collections.sort(students, byGPA);
+            if (student.getGpa() < 2.5) {
+                System.out.println("Removing: " + student);
+                filterIterator.remove();
+            }
+        }
 
-for (Student student : students) {
-    System.out.println(student);
-}
+        System.out.println("After filtering:");
+        for (Student student : students) {
+            System.out.println(student);
+        }
 
+        /**
+         * Section 10: Compare ArrayList and HashSet behavior with duplicate student IDs.
+         */
+        System.out.println("\n10. HashSet and Duplicate Student Test");
 
-// 8. Students Sorted by ID
-System.out.println("\n8. Students Sorted by ID");
+        Student duplicateStudent =
+                new Student(101, "Alex", "History", 3.0);
 
-Comparator<Student> byID =
-        (s1, s2) -> Integer.compare(s1.getId(), s2.getId());
+        List<Student> duplicateList = new ArrayList<>();
+        duplicateList.add(students.get(0));
+        duplicateList.add(duplicateStudent);
 
-Collections.sort(students, byID);
+        System.out.println("ArrayList with duplicate ID:");
+        for (Student student : duplicateList) {
+            System.out.println(student);
+        }
 
-for (Student student : students) {
-    System.out.println(student);
-}   
-    // 9. Filtering Students Using Iterator
-System.out.println("\n9. Filtering Students Using Iterator");
+        System.out.println("ArrayList size: " + duplicateList.size());
 
-System.out.println("Before filtering:");
-for (Student student : students) {
-    System.out.println(student);
-}
+        Set<Student> studentSet = new HashSet<>();
+        studentSet.add(students.get(0));
 
-Iterator<Student> filterIterator = students.iterator();
+        boolean addedDuplicate = studentSet.add(duplicateStudent);
 
-while (filterIterator.hasNext()) {
-    Student student = filterIterator.next();
+        System.out.println("\nTrying to add another student with ID 101...");
+        System.out.println("Was duplicate added to HashSet? " + addedDuplicate);
+        System.out.println("HashSet size: " + studentSet.size());
 
-    if (student.getGpa() < 2.5) {
-        System.out.println("Removing: " + student);
-        filterIterator.remove();
+        for (Student student : studentSet) {
+            System.out.println(student);
+        }
+
+        /**
+         * Section 11: Demonstrate LinkedList and TreeSet behavior.
+         */
+        System.out.println("\n11. LinkedList and TreeSet");
+
+        LinkedList<Student> linkedStudents = new LinkedList<>(students);
+
+        System.out.println("LinkedList:");
+        for (Student student : linkedStudents) {
+            System.out.println(student);
+        }
+
+        Student firstStudent = new Student(109, "Ava", "Physics", 3.7);
+        linkedStudents.addFirst(firstStudent);
+
+        System.out.println("\nAfter adding a student to the beginning:");
+        for (Student student : linkedStudents) {
+            System.out.println(student);
+        }
+
+        linkedStudents.removeFirst();
+
+        System.out.println("\nAfter removing the first student:");
+        for (Student student : linkedStudents) {
+            System.out.println(student);
+        }
+
+        Set<Student> treeSet = new TreeSet<>();
+        treeSet.addAll(students);
+
+        System.out.println("\nTreeSet - Students Sorted by Name:");
+        for (Student student : treeSet) {
+            System.out.println(student);
+        }
+
+        System.out.println("\n========== END OF PROGRAM ==========");
     }
 }
-
-System.out.println("After filtering:");
-for (Student student : students) {
-    System.out.println(student);
-}
-
-
-// 10. HashSet and Duplicate Student Test
-System.out.println("\n10. HashSet and Duplicate Student Test");
-
-Student duplicateStudent =
-        new Student(101, "Alex", "History", 3.0);
-
-// ArrayList allows both objects
-List<Student> duplicateList = new ArrayList<Student>();
-
-duplicateList.add(students.get(0));
-duplicateList.add(duplicateStudent);
-
-System.out.println("ArrayList with duplicate ID:");
-for (Student student : duplicateList) {
-    System.out.println(student);
-}
-
-System.out.println("ArrayList size: " + duplicateList.size());
-
-// HashSet checks equals() and hashCode()
-Set<Student> studentSet = new HashSet<Student>();
-
-studentSet.add(students.get(0));
-
-boolean addedDuplicate = studentSet.add(duplicateStudent);
-
-System.out.println("\nTrying to add another student with ID 101...");
-System.out.println("Was duplicate added to HashSet? " + addedDuplicate);
-System.out.println("HashSet size: " + studentSet.size());
-
-for (Student student : studentSet) {
-    System.out.println(student);
-}
-
-
-// 11. LinkedList and TreeSet
-System.out.println("\n11. LinkedList and TreeSet");
-
-// LinkedList example
-LinkedList<Student> linkedStudents =
-        new LinkedList<Student>(students);
-
-System.out.println("LinkedList:");
-for (Student student : linkedStudents) {
-    System.out.println(student);
-}
-
-Student firstStudent =
-        new Student(109, "Ava", "Physics", 3.7);
-
-linkedStudents.addFirst(firstStudent);
-
-System.out.println("\nAfter adding a student to the beginning:");
-for (Student student : linkedStudents) {
-    System.out.println(student);
-}
-
-linkedStudents.removeFirst();
-
-System.out.println("\nAfter removing the first student:");
-for (Student student : linkedStudents) {
-    System.out.println(student);
-}
-
-
-// TreeSet example
-Set<Student> treeSet = new TreeSet<Student>();
-
-treeSet.addAll(students);
-
-System.out.println("\nTreeSet - Students Sorted by Name:");
-
-for (Student student : treeSet) {
-    System.out.println(student);
-}
-
-System.out.println(
-        "\n========== END OF PROGRAM ==========");
-    
-    }// main ends here
-
-} // class ends here
-
-

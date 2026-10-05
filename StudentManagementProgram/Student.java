@@ -1,5 +1,6 @@
 /**
  * Represents a university student.
+ * Stores the student's identification number, name, major, and GPA.
  *
  * @author Aayusha Adhikari
  * @version 1.0
@@ -12,12 +13,12 @@ public class Student implements Comparable<Student> {
     private double gpa;
 
     /**
-     * Creates a Student object.
+     * Constructs a Student with the given profile information.
      *
-     * @param id the student's ID
-     * @param name the student's name
-     * @param major the student's major
-     * @param gpa the student's GPA
+     * @param id the student's unique ID
+     * @param name the student's full name
+     * @param major the student's academic major
+     * @param gpa the student's grade point average
      */
     public Student(int id, String name, String major, double gpa) {
         this.id = id;
@@ -27,7 +28,7 @@ public class Student implements Comparable<Student> {
     }
 
     /**
-     * Returns the student ID.
+     * Returns the student's ID.
      *
      * @return the student ID
      */
@@ -63,28 +64,30 @@ public class Student implements Comparable<Student> {
     }
 
     /**
-     * Changes the student's major.
+     * Updates the student's major.
      *
-     * @param major the new major
+     * @param major the new major to assign
      */
     public void setMajor(String major) {
         this.major = major;
     }
 
     /**
-     * Changes the student's GPA.
+     * Updates the student's GPA.
      *
-     * @param gpa the new GPA
+     * @param gpa the new GPA to assign
      */
     public void setGpa(double gpa) {
         this.gpa = gpa;
     }
 
     /**
-     * Compares students by name for natural ordering.
+     * Compares this student to another student by name.
+     * This allows Java to sort students alphabetically by name.
      *
-     * @param other the student to compare with
-     * @return a negative, zero, or positive value based on name comparison
+     * @param other the student to compare against
+     * @return a negative value if this student comes before the other,
+     *         zero if they are equal in name, or a positive value otherwise
      */
     @Override
     public int compareTo(Student other) {
@@ -92,19 +95,21 @@ public class Student implements Comparable<Student> {
     }
 
     /**
-     * Checks whether two Student objects have the same student ID.
+     * Compares this student to another object based on ID.
+     * Students are considered equal if they have the same ID.
      *
-     * @param obj the object being compared
-     * @return true if both students have the same ID, otherwise false
+     * @param obj the object to compare with
+     * @return true if the objects represent the same student, otherwise false
      */
     @Override
     public boolean equals(Object obj) {
-
-        if (this == obj)
+        if (this == obj) {
             return true;
+        }
 
-        if (obj == null)
+        if (obj == null) {
             return false;
+        }
 
         if (obj instanceof Student) {
             Student other = (Student) obj;
@@ -115,9 +120,9 @@ public class Student implements Comparable<Student> {
     }
 
     /**
-     * Returns a hash code based on the student ID.
+     * Generates a hash code for this student based on the ID.
      *
-     * @return the student's ID as the hash code
+     * @return the hash code for this student
      */
     @Override
     public int hashCode() {
@@ -125,9 +130,9 @@ public class Student implements Comparable<Student> {
     }
 
     /**
-     * Returns the student information as a String.
+     * Returns a string representation of the student.
      *
-     * @return student information
+     * @return the student's information as a formatted string
      */
     @Override
     public String toString() {
